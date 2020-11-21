@@ -1,0 +1,145 @@
+#!/bin/sh -f
+
+die() {
+    printf '%s\n' "$@"
+    exit 1
+}
+
+runs() {
+    pgrep -x "$1" >/dev/null
+}
+
+exists() {
+    command -v "$1" >/dev/null
+}
+
+seqs() {
+    seqs="$seqs]$1;$2\\";
+}
+
+sequences() {
+    while read -r line; do
+        color="${line:=#000000}"
+
+        printf '%s\n' "color${i:=0}=\"$line\"" >> "$cache_dir/colors"
+
+        seqs "4;$i" "$color"
+
+        [ "$i" = 0 ] && {
+            # 11:  Background color
+            # 17:  Highlight background Color
+            # 257: Reversed cursor color
+            # 258: Background color
+            seqs "11" "$color"
+            seqs "17" "$color"
+            seqs "4;257" "$color"
+            seqs "4;258" "$color"
+
+            # Unless VTE
+            # 708: Border color
+            [ "$VTE_VERSION" ] || seqs "708" "$color"
+        }
+
+        [ "$i" = 8 ] && {
+            if runs "picom" || runs "compton"; then
+                exists "hsetroot" && hsetroot -solid "$color"
+            else
+                exists "xsetroot" && xsetroot -solid "$color"
+            fi
+        }
+
+        [ "$i" = 15 ] && {
+            # 10:  Foreground color
+            # 12:  Cursor foreground color
+            # 13:  Mouse foreground color
+            # 19:  Highlight foreground Color
+            # 256: Cursor color
+            # 259: Foreground color
+
+            seqs "10" "$color"
+            seqs "12" "$color"
+            seqs "13" "$color"
+            seqs "19" "$color"
+            seqs "4;256" "$color"
+            seqs "4;259" "$color"
+        }
+
+        : $((i+=1))
+    done < "$1"
+
+    set +f
+    set -f -- /dev/pts/[0-9]*
+    for tty in "$@"; do
+        [ -w "$tty" ] && printf %b "$seqs" > "$tty" &
+    done
+
+    printf %b "$seqs" > "$cache_dir/palette"
+}
+
+blocks() {
+    printf 'Palette: %s\n\n' "$1"
+
+    for i in 1 2 3 4 5 6 7; do
+        printf '\033[4%sm  \033[m ' "$i"
+    done
+
+    printf '\n\n'
+
+    exit
+}
+
+palettes() {
+    set +f
+    set -f -- "$1"/*
+
+    for p in "$@"; do printf '%s\n' "${p##*/}"; done
+
+    exit
+}
+
+args() {
+    case $1 in
+        u|use)
+            [ "$2" ] || die "No palette selected."
+
+            palette=$2
+
+            [ -f "$dir/$palette" ] || {
+                die "Palette $palette not found."
+            }
+
+            :> "$cache_dir/colors"
+
+            sequences "$dir/$palette"
+
+            blocks "$palette"
+        ;;
+        l|list) palettes "$dir" ;;
+        r|reload) cat "$cache_dir/palette" 2>/dev/null; exit ;;
+        *) printf '%s\n' \
+            "Usage: pap [OPTION]" \
+            "  u|use       Use selected palette" \
+            "  l|list      List available palettes" \
+            "  r|reload    Reload active palette (e.g. in \$SHELL's startup file)"
+            exit
+        ;;
+    esac
+}
+
+main() {
+    [ -z "$PAP_DIR" ] && {
+        die "PAP_DIR is not set."
+    }
+
+    [ -d "$PAP_DIR/palettes" ] || {
+        die "No palette direcotry found in \"$PAP_DIR/\"."
+    }
+
+    mkdir -p "${cache_dir:=${HOME}/.cache/pap}"
+
+    dir="${PAP_DIR%%/}/palettes"
+
+    args "$@"
+}
+
+main "$@"
