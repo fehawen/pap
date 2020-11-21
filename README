@@ -5,8 +5,11 @@ Easily change between your favorite palettes.
 
 No randomness, no fuzz. Pick the palette you want to use, and enjoy the colors.
 
-A selection of palettes is included with pap, but you are encouraged to extend
-the selection with your personal favorites.
+A small selection of palettes that I use myself is included with pap, but
+you are encouraged to extend the selection with your own personal favorites.
+
+If you feel that your favorite palettes are worth sharing with the world, feel
+free to open a PR to include them in pap's default selection!
 
 Each palette defines the 16 ASCII colors in order and in hex format:
 
