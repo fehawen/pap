@@ -97,6 +97,17 @@ palettes() {
     exit
 }
 
+usage() { printf %s "\
+pap - pick a palette.
+
+u, use       Use selected palette
+l, list      List available palettes
+r, reload    Reload active palette
+"
+exit
+}
+
+
 args() {
     case $1 in
         u|use)
@@ -116,13 +127,7 @@ args() {
         ;;
         l|list) palettes "$dir" ;;
         r|reload) cat "$cache_dir/palette" 2>/dev/null; exit ;;
-        *) printf '%s\n' \
-            "Usage: pap [OPTION]" \
-            "  u|use       Use selected palette" \
-            "  l|list      List available palettes" \
-            "  r|reload    Reload active palette (e.g. in \$SHELL's startup file)"
-            exit
-        ;;
+        *) usage ;;
     esac
 }
 
@@ -131,13 +136,13 @@ main() {
         die "PAP_DIR is not set."
     }
 
-    [ -d "$PAP_DIR/palettes" ] || {
-        die "No palette direcotry found in \"$PAP_DIR/\"."
+    [ -d "$PAP_DIR" ] || {
+        die "PAP_DIR is not a directory."
     }
 
     mkdir -p "${cache_dir:=${HOME}/.cache/pap}"
 
-    dir="${PAP_DIR%%/}/palettes"
+    dir="${PAP_DIR%%/}"
 
     args "$@"
 }
