@@ -44,9 +44,9 @@ Add ~/.bin to PATH in $SHELL's startup file.
 
     export PATH=~/bin:$PATH
 
-Specify the path to this directory with PAP_DIR in $SHELL's startup file.
+Specify a palette directory with PAP_DIR in $SHELL's startup file.
 
-    export PAP_DIR=~/pap
+    export PAP_DIR=~/pap/palettes
 
 Persist colors by adding the following in $SHELL's startup file.
 
