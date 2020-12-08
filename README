@@ -1,5 +1,5 @@
 pap - pick a palette
-------------------------------
+--------------------
 
 Easily change between your favorite palettes.
 
@@ -16,7 +16,7 @@ Each palette defines the 16 ASCII colors in order and in hex format.
 Each color's order represent:
 
 Normal      Bright
---------    -------
+------      ------
 0 Black      8 Black
 1 Red        9 Red
 2 Yellow    10 Yellow
@@ -61,6 +61,6 @@ Persist colors by adding the following in $SHELL's startup file.
 usage
 -----
 
-pap u|use     Use selected palette
-pap l|list    List available palettes
-pap r|reload  Reload active palette (e.g. in $SHELL's startup file)
+pap u|use <palette>    Use selected palette
+pap l|list             List available palettes
+pap r|reload           Reload active palette (e.g. in $SHELL's startup file)
