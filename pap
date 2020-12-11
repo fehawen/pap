@@ -73,7 +73,7 @@ sequences() {
         [ -w "$tty" ] && printf %b "$seqs" > "$tty" &
     done
 
-    printf %b "$seqs" > "$cache_dir/palette"
+    printf %b "$seqs" > "$cache_dir/sequences"
 }
 
 blocks() {
@@ -128,7 +128,7 @@ args() {
             blocks "$palette"
         ;;
         l|list) palettes "$dir" ;;
-        r|reload) cat "$cache_dir/palette" 2>/dev/null; exit ;;
+        r|reload) cat "$cache_dir/sequences" 2>/dev/null; exit ;;
         *) usage ;;
     esac
 }
@@ -142,7 +142,7 @@ main() {
         die "PAP_DIR is not a directory."
     }
 
-    mkdir -p "${cache_dir:=${HOME}/.cache/pap}"
+    mkdir -p "${cache_dir:=${COLOR_CACHE:=${HOME}/.cache/pap}}"
 
     dir="${PAP_DIR%%/}"
 
