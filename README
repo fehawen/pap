@@ -64,3 +64,12 @@ usage
 pap u|use <palette>    Use selected palette
 pap l|list             List available palettes
 pap r|reload           Reload active palette (e.g. in $SHELL's startup file)
+
+
+caveats
+-------
+
+Make sure that your terminal emulator has proper OSC implementation.
+For example, st terminal doesn't play nicely with pap without the osc patch:
+
+https://st.suckless.org/patches/osc_10_11_12_2/
