@@ -5,7 +5,8 @@ all:
 
 install:
 	@mkdir -pv $(DESTDIR)$(PREFIX)/bin
-	@cp -pv pap $(DESTDIR)$(PREFIX)/bin/pap
+	@cp -p pap $(DESTDIR)$(PREFIX)/bin/pap
+	@chmod 755 $(DESTDIR)$(PREFIX)/bin/pap
 	@echo Add \'~/bin\' to PATH.
 
 uninstall:
