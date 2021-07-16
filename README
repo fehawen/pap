@@ -1,5 +1,5 @@
 pap - pick a palette
---------------------
+--------------------------------------------------------------------------------
 
 Easily change between your favorite palettes.
 
@@ -28,7 +28,7 @@ Normal      Bright
 
 
 install
--------
+--------------------------------------------------------------------------------
 
 Clone the repo.
 
@@ -59,7 +59,7 @@ Persist colors by adding the following in $SHELL's startup file.
 
 
 usage
------
+--------------------------------------------------------------------------------
 
 pap u|use <palette>    Use selected palette
 pap l|list             List available palettes
