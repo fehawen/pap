@@ -38,7 +38,7 @@ Change working directory to pap.
 
     $ cd pap
 
-Install pap [*].
+Install pap.
 
     $ make install
 
@@ -53,9 +53,6 @@ Specify a palette directory with PAP_DIR in $SHELL's startup file.
 Persist colors by adding the following in $SHELL's startup file.
 
     pap reload
-
-
-[*] installs to ~/bin by default, and `make install` should thus not run as root.
 
 
 usage
