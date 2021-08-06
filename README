@@ -32,7 +32,7 @@ install
 
 Clone the repo.
 
-    $ cd && git clone https://github.com/fehawen/pap.git
+    $ git clone https://github.com/fehawen/pap.git
 
 Change working directory to pap.
 
@@ -41,10 +41,6 @@ Change working directory to pap.
 Install pap.
 
     $ make install
-
-Add ~/.bin to PATH in $SHELL's startup file.
-
-    export PATH=~/bin:$PATH
 
 Specify a palette directory with PAP_DIR in $SHELL's startup file.
 
